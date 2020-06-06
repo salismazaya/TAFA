@@ -70,5 +70,6 @@ def listFriendParser(html):
 	id_ = [re.search(r"\w[\w.]+", x["href"].replace("/", "").replace("profile.php?id=", "")).group() for x in data]
 
 	img = [x["src"] for x in to_bs4(html).find_all("img", alt = lambda x: x and "profile picture" in x)]
+        del img[0]
 	next = parsing_href(html, "unit_cursor=", one = True)
 	return {"items":list(zip(nama, id_, img)), "next":next, "html":html}
