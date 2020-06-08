@@ -41,10 +41,9 @@ def showAuthor():
   return "   Coded by: Salis Mazaya"
  
 def showSupporter():
-	manteman = ["Maoundis", "Zettamus", "Anonk", "Beng", "MicroDragon", "LOV14N4DR"]
+	manteman = ["Maoundis", "Njank","Zettamus", "Anonk", "Beng", "MicroDragon", "LOV14N4DR"]
 	random.shuffle(manteman)
-	manteman = manteman[:2]
-	manteman.insert(0, "Njank")
+	manteman = manteman[:3]
 	return "   Support by: " + ", ".join(manteman)
  
 def getMsg():
