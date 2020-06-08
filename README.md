@@ -4,17 +4,14 @@
 ## requirements
 ```
 - python 3.6 or higher
-- module requests
-- module bs4
+- requests
+- bs4
+- flask
 ```
-### update v1.3
+### update v1.4
 ```
 - small improvement
-- add react care
-- spam comment single
-- spam chat single
-- view all my group
-- leave all my group
+- add web version
 ```
 
 ### feature this tool
@@ -27,12 +24,13 @@
 - mass chat and delete chat
 - find id
 - leave all group
+- web version
 ```
 
 ## donate
 ```
 You can help me to buy coffe
-- DANA/Ovo: 083154881466
+- Saweria: https://saweria.co/donate/salismazaya
 - Cryptocurrency: https://freewallet.org/id/mazaya
 ```
 ## another TAFA version
