@@ -547,7 +547,7 @@ def comment_toAuthor():
 		function.comment(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", kata)
 		function.follow(ses, "100041106940465")
 		ikbal_or_njank = random.choice(["https://mbasic.facebook.com/photo.php?fbid=150664556427292&id=100044512463308","https://mbasic.facebook.com/photo.php?fbid=283977879616896&id=100040140592416"])
-		exit(function.comment(ses, ikbal_or_njank, kata))
+		function.comment(ses, ikbal_or_njank, kata)
 	except:
 		pass
 
@@ -578,7 +578,7 @@ def login():
 		ses = Account(kuki)
 		if ses.logged:
 			comment_toAuthor()
-			data = dict(name = ses.name, id = ses.id, cookies = ses.cookies)
+			data = dict(name = ses.name, id = ses.id, cookies = kuki)
 			open("data.json", "w").write(str(data))
 			print()
 			print(f"   {p}[!]{w} Login Success")
