@@ -1,0 +1,82 @@
+{% import "core.html" as core %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	{{core.init()}}
+</head>
+<body class="bg-dark">
+	<div class="container" style="margin-top: 70px">
+		{{core.navbar()}}
+		{% for name, id_, img in items %}
+			<div class="row text-monospace ml-1 mb-1" id="{{id_|replace('.', '')}}">
+				<div class=""><img src="{{img}}" class="img-fluid img-thumbnail" height="110" width="110"></div>
+				<div class="ml-2 mt-auto mb-auto text-white">
+					<span>{{name[:18]}}</span><br>
+					<span>{{id_}}</span><br>
+					<div id="keren">
+						<a class="dropdown-toggle" href="#" id="Dropdown" role="button" data-toggle="dropdown">
+							Action
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="Dropdown">
+				          <a class="dropdown-item" onclick="unfriend('{{name[:18]}}', '{{id_}}')">Unfriend</a>
+				        </div>
+					</div>
+
+				</div>
+			</div>
+		{% endfor %}
+		<div class="ml-2 mt-2 mb-3">
+			{% if next %}
+				<a href="/myfriends?next={{next}}" class="btn btn-primary">Next</a>
+			{% endif %}
+		</div>
+	</div>
+	 
+	 {{core.js()}}
+	 <script type="text/javascript">
+	 	function unfriend(name, id){
+	 		swal({
+			  text: null,
+			  title: `are you sure unfriend ${name}?`,
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then(function(arg) {
+				if (arg) {
+					unfriend_procces(name, id);
+				}
+			});
+		}
+
+		function unfriend_procces(name, id){
+	 		var id2 = id.replace(/[.]/g, "");
+	 		var html = $(`#${id2}`);
+	 		var tombol = html.find("#keren");
+	 		var tombol_html = tombol.html();
+	 		execute = true;
+	 		if (execute) {
+	 			$.ajax({
+	 				url: `/function/unfriend`,
+	 				data: {"id":id},
+	 				method: "GET",
+	 				beforeSend: function() {
+	 					tombol.html("<span>Loading ...</span>")
+	 				},
+	 				success: function(data){
+	 					data = $.parseJSON(data);
+	 					if (data.status) {
+	 						alert_(`Success unfriend ${name}`, null, type = "success");
+	 						html.addClass("d-none");
+	 					} else {
+	 						alert_(`Failed unfriend ${name}`, null, type = "error");
+	 						tombol.html(tombol_html);
+	 					}
+	 				}
+	 			});
+	 		}
+	 	}
+	 </script>	
+</body>
+</html>

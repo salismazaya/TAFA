@@ -1,0 +1,103 @@
+{% import "core.html" as core %}
+{% extends "template.html" %}
+
+{% block name_menu %}
+	Spam Comment in Fanspage
+{% endblock %}
+
+{% block input_fields %}
+   {{core.input("fa fa-user", "Username Fanspage", "id_target")}}
+   {{core.input("fa fa-comments", "Comment Value", "msg")}}
+	{{core.input("fa fa-thumbs-up", "Limit", "limit", type = "number")}}
+{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			const tombol = $("#send");
+			const log = $("#log");
+			const limit = $("#limit");
+         const success = $("#number-success");
+         const failed = $("#number-failed")
+			tombol.click(gas);
+
+			function gas() {
+            const msg = $("#msg").val();
+            const user = $("#id_target").val();
+				const limit_value = parseInt(limit.val())
+
+				if (user == "" || msg == "" || !limit_value && limit_value != 0) {
+					log.append("<span>there must be no blank input!</span>");
+				} else if (limit_value < 1 || limit_value > 80) {
+					log.append("<span>limit min: 1 max: 80</span>");
+				} else {
+					$.ajax({
+		 				url: `/function/dump`,
+		 				data: {
+		 					"func":"comment_post_fanspage",
+                     "username":user,
+		 					"limit":limit_value,
+		 				},
+		 				method: "GET",
+		 				beforeSend: function() {
+		 					log.append("Get data ...");
+		 					tombol.toggleClass("d-none");
+		 				},
+		 				success: async function(data){
+		 					data = $.parseJSON(data);
+		 					if (data.status) {
+                        log.append(`<span>Target: <span class="font-weight-bold">${data.title}</span></span>`)
+		 						data = data.items;
+                        await sleep(2500);
+		 						log.append(`<span>Total: ${data.length}</span>`)
+                        await sleep(1000);
+                        log.append("<span>Process ... </span>")
+		 						gas_process(data);
+		 					}
+		 				}
+		 			});
+				}
+			}
+
+			async function gas_process(data){
+            const msg = $("#msg").val();
+            if (data.length == 0) {
+               log.append("<span>Done!</span>")
+               tombol.toggleClass("d-none");
+               return ;
+            }
+
+            let total_success = 0;
+            let total_failed = 0;
+            for (let i = 0; i < data.length; i++){
+               url = data[i];
+               await sleep(300);
+               await new Promise(resolve => {
+                  resolve($.ajax({
+                     url: `/function/comment`,
+                     data: {
+                        "url":url,
+                        "comment_value":msg,
+                     },
+                     method: "POST",
+                     success: function(data){
+                        data = $.parseJSON(data);
+                        if (data.status) {
+                           total_success += 1;
+                           success.html(total_success);
+                        } else {
+                           total_failed += 1;
+                           failed.html(total_failed); 
+                        }
+                     }
+                  }));
+               });
+               if (total_success + total_failed == data.length) {
+                  log.append("<span>Done!</span>")
+                  tombol.toggleClass("d-none");
+               }
+            }
+			}
+		});
+	</script>
+{% endblock %}

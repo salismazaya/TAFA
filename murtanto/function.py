@@ -48,8 +48,6 @@ def react(ses, url, type = "love", in_reactions_picker = True):
 			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=7" in x)["href"])
 		elif type == "angry":
 			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=8" in x)["href"])
-		elif type == "care":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=16" in x)["href"])
 		else:
 			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=2" in x)["href"])
 		html = ses.get(url).text
@@ -60,19 +58,31 @@ def react(ses, url, type = "love", in_reactions_picker = True):
 
 # @check_argument(["args", "kwargs"])
 def dump(func, args = [], kwargs = {}, limit = 100):
-  rv = []
-  kwargs = kwargs.copy()
-  data = func(*args, **kwargs)
-  rv += data.items[:limit]
-  if len(rv) >= limit:
-    return rv[:limit]
-  while data.next:
-    kwargs["next"] = data.next
-    data = func(*args, **kwargs)
-    rv += data.items
-    if len(rv) >= limit:
-      return rv[:limit]
-  return rv
+	angka = 0
+	rv = []
+	kwargs = kwargs.copy()
+	data = func(*args, **kwargs)
+	for x in data.items:
+		angka += 1
+		rv.append(x)
+		if angka == limit:
+			break
+	else:
+		kwargs["next"] = data.next
+		penentu = bool(data.next)
+		while penentu:
+			# print(data.next)
+			data = func(*args, **kwargs)
+			for x in data.items:
+				angka += 1
+				rv.append(x)
+				if angka == limit:
+					penentu = False
+					break
+			if not data.next:
+				penentu = False
+	
+	return rv
 
 @check_login
 def follow(ses, id):
@@ -145,18 +155,4 @@ def deleteMsg(ses, url):
 		html = ses.session.get(url).text
 	except:
 		status = False
-	return Output2(status, html, ses.session_number)
-
-@check_login
-def leave_group(ses, id):
-	status = True
-	html = ses.session.get("https://mbasic.facebook.com/group/leave/?group_id={}".format(id)).text
-	try:
-		data = ses.session.current_hidden_input(index = 1)
-		html_ = ses.session.post("https://mbasic.facebook.com/a/group/leave/?qp=0", data = data).text
-		if "?source=ErrorPage" in html_:
-			raise Exception
-		html = html_
-	except:
-		status = False
-	return Output2(status, html, ses.session_number)		
+	return Output2(status, html, r_ses.session_number)

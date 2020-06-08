@@ -1,0 +1,78 @@
+{% import "core.html" as core %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	{{core.init()}}
+</head>
+<body class="bg-dark">
+	{{core.navbar()}}
+	{{core.js()}}
+	<div class="container" style="margin-top: 70px">
+		<table class="table bg-light">
+		  <tbody>
+		  	{% for name, id_ in items %}
+		  		<tr id="{{id_}}">
+			      <td>{{name[:25]}}</td>
+			      <td>{{id_}}</td>
+			      <td>
+						<div id="keren">
+							<a class="dropdown-toggle" href="#" id="Dropdown" role="button" data-toggle="dropdown">
+								Action
+					        </a>
+					        <div class="dropdown-menu" aria-labelledby="Dropdown">
+					          <a class="dropdown-item" onclick="leave('{{name[:25]}}', '{{id_}}')">Leave</a>
+					        </div>
+						</div>
+			      </td>
+			    </tr>
+		  	{% endfor %}
+		  </tbody>
+		</table>
+	</div>
+	 <script type="text/javascript">
+	 	function leave(name, id){
+	 		swal({
+			  text: null,
+			  title: `are you sure leave ${name}?`,
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then(function(arg) {
+				if (arg) {
+					leave_procces(name, id);
+				}
+			});
+		}
+
+		function leave_procces(name, id){
+	 		var id2 = id.replace(/[.]/g, "");
+	 		var html = $(`#${id2}`);
+	 		var tombol = html.find("#keren");
+	 		var tombol_html = tombol.html();
+	 		execute = true;
+	 		if (execute) {
+	 			$.ajax({
+	 				url: `/function/leave`,
+	 				data: {"id":id},
+	 				method: "GET",
+	 				beforeSend: function() {
+	 					tombol.html("<span>Loading ...</span>")
+	 				},
+	 				success: function(data){
+	 					data = $.parseJSON(data);
+	 					if (data.status) {
+	 						alert_(`Success leave ${name}`, null, type = "success");
+	 						html.addClass("d-none");
+	 					} else {
+	 						alert_(`Failed leave ${name}`, null, type = "error");
+	 						tombol.html(tombol_html);
+	 					}
+	 				}
+	 			});
+	 		}
+	 	}
+	 </script>
+</body>
+</html>

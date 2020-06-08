@@ -1,0 +1,50 @@
+{% import "core.html" as core %}
+
+{% set profile_picture = ses.profile_picture %}
+{% if not ses.profile_picture %}
+  {% set profile_picture = "https://scontent.fsub8-1.fna.fbcdn.net/v/t1.0-0/cp0/e15/q65/p320x320/75543771_146472003399697_7171139210018029568_o.jpg?_nc_cat=105&_nc_sid=7aed08&efg=eyJpIjoiYiJ9&_nc_ohc=l5AeHCoFtBkAX9wLofu&_nc_ht=scontent.fsub8-1.fna&_nc_tp=3&oh=dd9494a22772f15b00f73f986f534773&oe=5EFEE37A" %}
+{% endif %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {{core.init()}}
+  </head>
+  <body class="bg-dark">
+    {{core.navbar()}}
+    <div class="container">
+      <div class="card" style="margin-top: 70px">
+        <div class="card-body mx-auto">
+          <div class="row">
+            <div class="col-sm-6">
+              <img src="{{profile_picture}}" alt="{{ses.name[:15]}} photo" class="img-thumbnail img-fluid rounded mx-auto d-block" width="200" height="200">
+            </div>
+            <div class="col-sm-6">
+               <div class="pt-3" style="">
+                 <span class="text-monospace">{{ses.name[:15]}}</span><br>
+                 <span class="text-monospace">{{ses.id}}</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-monospace bg-light mt-2">
+        <table class="table">
+          <tbody>
+            {% set daftar = [("/reaction/hm", "Spam Reaction in Home"), ("/reaction/ft", "Spam Reaction in Friend Timeline"), ("/reaction/gr", "Spam Reaction in Group"), ("/reaction/fp", "Spam Reaction in Fanspage"), ("/comment/hm", "Spam Comment in Home"), ("/comment/ft", "Spam Comment in Friend Timeline"), ("/comment/gr", "Spam Comment in Group"), ("/comment/fp", "Spam Comment in Fanspage"), ("/mass/unfriend", "Mass Unfriend"), ("/mass/accept-friend", "Mass Accept Friend"), ("/mass/reject-friend", "Mass Reject Friend"), ("/mass/unadd", "Mass Unadd (not Unfriend)")]%}
+           {% for url, string in daftar %}
+              <tr>
+                <td><a href="{{url}}">{{string}}</a></td>
+              </tr>
+           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {{core.js()}}
+    <script type="text/javascript">
+      alert_("Using this tool can make your account blocked", null)
+    </script>
+  </body>
+</html>

@@ -54,7 +54,6 @@ class Account:
         return self._session
     
     def login(self, cookies):
-        self._cookies = cookies
         self._session = HttpRequest()
         self.session.set_cookies(cookies)
         data = self.session.get("https://mbasic.facebook.com/me")

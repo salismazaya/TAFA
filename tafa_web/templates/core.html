@@ -1,0 +1,64 @@
+{% macro init() %}
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+
+    <title>Toolkit For Facebook</title>
+
+    <style type="text/css">
+      a {
+        text-decoration: none !important;
+      }  
+    </style>
+{% endmacro %}
+
+{% macro navbar() %}
+	 <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top mb-0 mt-0">
+      <div class="container">
+        <span class="navbar-brand h1 mb-0">TOOLKIT FOR FACEBOOK</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/myfriends">My Friends<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/mygroups">My Groups<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="https://saweria.co/donate/salismazaya" target="_blank">Donate<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link text-monospace" href="https://mbasic.facebook.com/salis1919" target="_blank">Made with &#10084; by SalisM3<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endmacro %}
+
+{% macro js() %}
+	<script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/sweetalert.min.js"></script>
+    <script src="/static/js/script.js"></script>
+{% endmacro %}
+
+{% macro input(icon, text, id, type = "text") %}
+	<div class="input-group mb-3">
+	  <div class="input-group-prepend">
+	    <span class="input-group-text" id="basic-addon1"><i class="{{icon}}" aria-hidden="true"></i></span>
+	  </div>
+	  <input type="{{type}}" class="form-control" id="{{id}}" placeholder="{{text}}" aria-label="{{text}}" aria-describedby="basic-addon1">
+	</div>
+{% endmacro %}

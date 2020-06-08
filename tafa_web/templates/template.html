@@ -1,0 +1,55 @@
+{% import "core.html" as core %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	{{core.init()}}
+</head>
+<body class="bg-dark">
+	{{core.navbar()}}
+
+	<div class="container text-monospace pb-3" style="margin-top: 70px">
+		<div class="card">
+		  <div class="card-body">
+		    <h3 class="card-title text-center">{% block name_menu %}{% endblock %}</h3>
+		    {% block input_fields %}
+		    	
+		    {% endblock %}
+		    <center>
+		    	<submit class="btn btn-primary" id="send"><i class="fa fa-paper-plane" aria-hidden="true"></i><span class="ml-1">Submit</span></submit>
+		    </center>
+		  </div>
+		</div>
+		<div class="card card-body mt-2" id="log">
+		    <h4 class="card-title text-center">LOG</h4>
+		</div>
+		<center>
+			<button class="btn btn-danger mt-2" onclick="deleteLog()"><i class="fa fa-trash" aria-hidden="true">
+				</i><span class="ml-1">Delete Log</span>
+			</button>
+		</center>
+		<div class="card card-body mt-2">
+			<div class="mx-auto">
+				<div class="row">
+					<div class="alert alert-success" role="alert">
+					  Success: <span id="number-success">0</span>
+					</div>
+					<div class="alert alert-danger ml-1" role="alert">
+					  Failed: <span id="number-failed">0</span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	{{core.js()}}
+	<script type="text/javascript">
+		function deleteLog() {
+			$("#log").html('<h4 class="card-title text-center">LOG</h4><span>Log deleted</span>')
+		}
+	</script>
+
+	{% block javascript %}
+	{% endblock %}
+</body>
+</html>
