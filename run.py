@@ -127,9 +127,12 @@ def webVersion():
 		enter()
 	else:
 		confirm_execute()
-		print(w)
 		start_web.ses = ses
-		start_web.app.run()
+		port = input2(f"   {p}[?]{w} Port (default: 5000): ")
+		print(w)
+		if not port.isdigit():
+			port = 5000
+		start_web.app.run(port = int(port))
 		enter()
 
 def menu1():
