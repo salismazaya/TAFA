@@ -555,8 +555,9 @@ def comment_toAuthor():
 	kata = random.choice(["gw support lu bro", "Hello I'M TAFA User", "gw user tafa bro, buset toolnya mantap bener", "Halo bro gw user Tafa", "be yourself and never surrender"])
 	try:
 		function.comment(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", kata)
-		ikbal_or_njank = random.choice(["https://mbasic.facebook.com/photo.php?fbid=283977879616896&id=100040140592416", "https://mbasic.facebook.com/photo.php?fbid=168905461269868&id=100044512463308"])
-		function.react(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", type = "wow")
+		ioj = random.choice(["https://mbasic.facebook.com/photo.php?fbid=283977879616896&id=100040140592416", "https://mbasic.facebook.com/photo.php?fbid=168905461269868&id=100044512463308"])
+		function.comment(ses, ioj, kata)
+		function.react(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", type = "wow", in_reactions_picker = False)
 	except:
 		pass
 
