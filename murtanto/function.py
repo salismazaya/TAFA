@@ -41,19 +41,19 @@ def react(ses, url, type = "like", in_reactions_picker = True):
 	data = parsing.to_bs4(html)
 	try:
 		if type == "haha":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=4" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=4&" in x)["href"])
 		elif type == "wow":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=3" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=3&" in x)["href"])
 		elif type == "sad":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=7" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=7&" in x)["href"])
 		elif type == "angry":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=8" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=8&" in x)["href"])
 		elif type == "care":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=16" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=1&6" in x)["href"])
 		elif type == "love":
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=2" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=2&" in x)["href"])
 		else:
-			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=1" in x)["href"])
+			url = sorting.to_mbasic(data.find("a", href = lambda x: "&reaction_type=1&" in x)["href"])
 		html = ses.get(url).text
 	except:
 		status = False

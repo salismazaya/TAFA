@@ -6,29 +6,42 @@
 	{{core.init()}}
 </head>
 <body class="bg-dark">
+	{{core.navbar()}}
 	<div class="container" style="margin-top: 70px">
-		{{core.navbar()}}
-		{% for name, id_, img in items %}
-			<div class="row text-monospace ml-1 mb-1" id="{{id_|replace('.', '')}}">
-				<div class=""><img src="{{img}}" class="img-fluid img-thumbnail" height="110" width="110"></div>
-				<div class="ml-2 mt-auto mb-auto text-white">
-					<span>{{name[:18]}}</span><br>
-					<span>{{id_}}</span><br>
-					<div id="keren">
-						<a class="dropdown-toggle" href="#" id="Dropdown" role="button" data-toggle="dropdown">
-							Action
-				        </a>
-				        <div class="dropdown-menu" aria-labelledby="Dropdown">
-				          <a class="dropdown-item" onclick="unfriend('{{name[:18]}}', '{{id_}}')">Unfriend</a>
-				        </div>
+		<div class="input-group mb-3">
+		  <input type="text" class="form-control" id="input" placeholder="Full Name" aria-label="Full Name" aria-describedby="search">
+		  <div class="input-group-append">
+		    <button class="btn btn-primary" type="button" id="search" onclick="search()"><i class="fa fa-search"></i><span class="ml-1">Search</span></button>
+		  </div>
+		</div>
+		<div id="friend">
+			<div class="row mx-auto">
+				{% for name, id_, img in items %}
+					<div class="col-lg-6 mb-1" id="{{id_|replace('.', '')}}">
+						<div class="row text-monospace text-white">
+							<img src="{{img}}" class="img-fluid img-thumbnail" style="width: 180px">
+							<div class="my-auto ml-2">
+								<span>{{name[:20]}}</span><br>
+								<span>{{id_}}</span><br>
+								<div class="dropdown" id="keren">
+								  <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    Action
+								  </button>
+								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								    <a class="dropdown-item" onclick="unfriend('{{name}}', '{{id_}}')">Unfriend</a>
+								    <a class="dropdown-item" href="/reaction/ft?id={{id_}}">Spam React</a>
+								    <a class="dropdown-item" href="/comment/ft?id={{id_}}">Spam Comment</a>
+								  </div>
+								</div>
+							</div>
+						</div>
 					</div>
-
-				</div>
+				{% endfor %}
 			</div>
-		{% endfor %}
-		<div class="ml-2 mt-2 mb-3">
 			{% if next %}
-				<a href="/myfriends?next={{next}}" class="btn btn-primary">Next</a>
+				<a class="btn btn-primary mt-1 mb-3" href="/myfriends?next={{next}}">Next</a>
+			{% else %}
+				<a class="btn btn-primary mt-1 mb-3" href="/myfriends">Back to the beginning</a>		
 			{% endif %}
 		</div>
 	</div>
@@ -76,6 +89,45 @@
 	 				}
 	 			});
 	 		}
+	 	}
+
+	 	function search() {
+	 		var name = $("#input").val();
+	 		var friend = $("#friend");
+	 		if (name == "") return ;
+	 		$.ajax({
+	 			url: "/function/search_f",
+	 			data: {"name":name},
+	 			method: "GET",
+	 			success: data => {
+	 				try {
+	 					data = $.parseJSON(data);
+		 				friend.html(`
+		 					<div class="col-lg-6 mb-1">
+								<div class="row text-monospace text-white">
+									<img src="${data[2]}" class="img-fluid img-thumbnail" style="width: 180px">
+									<div class="my-auto ml-2">
+										<span>${data[0]}</span><br>
+										<span>${data[1]}</span><br>
+										<div class="dropdown">
+										  <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    Action
+										  </button>
+										  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										    <a class="dropdown-item" onclick="unfriend('${data[0]}', '${data[1]}')">Unfriend</a>
+										    	<a class="dropdown-item" href="/reaction/ft?id=${data[1]}">Spam React</a>
+							    				<a class="dropdown-item" href="/comment/ft?id=${data[1]}">Spam Comment</a>
+										  </div>
+										</div>
+									</div>
+								</div>
+							</div>
+		 				`);
+	 				} catch(err) {
+	 					alert_("Not Found", null, type = "error");
+	 				}
+	 			}
+	 		});
 	 	}
 	 </script>	
 </body>

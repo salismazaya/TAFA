@@ -64,6 +64,8 @@
 
             let total_success = 0;
             let total_failed = 0;
+            success.html(0);
+            failed.html(0);
             for (let i = 0; i < data.length; i++){
                url = data[i];
                await sleep(300);

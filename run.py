@@ -29,7 +29,7 @@ def banner(author = False):
 	os.system("cls" if os.name == "nt" else "clear")
 	print(f"""
 {p}________________ {c} ___________{p}_____   
-{p}\__    ___/  _  \ {c}\_   _____/{p}  _  \ {c}v1.4{D}dev
+{p}\__    ___/  _  \ {c}\_   _____/{p}  _  \ {c}v1.41{D}dev
 {p}  |    | /  /_\  \{c} |    __){p}/  /_\  \ 
 {p}  |    |/    |    \{c}|     \{p}/    |    \\
 {p}  |____|\____|__  /{c}\___  /{p}\____|__  /
@@ -62,17 +62,23 @@ def hitung_proses(jumlah):
 	sys.stdout.flush()
 
 def home():
+	read_this = """1. Your account can be banned if you use this
+2. After successfully logging in your account will automatically comment on the author profile photo and react
+3. Don't use this for crime
+4. Everything the user does is not the responsibility of the author
+5. By using this the user is considered to understand and comply with the above provisions"""
 	banner(author = True)
 	print('')
 	print(f"{y}   1). {w}Go To Menu")
 	print(f"{y}   2). {w}Start Web Version")
 	print(f"{y}   3). {w}Login")
 	print(f"{y}   4). {w}Logout")
+	print(f"{y}   5). {w}Update")
 	print(f"{y}   0). {w}Exit\n")
-	pilih = select(0,4)
+	pilih = select(0,5)
 	if pilih == 0:
 		banner()
-		print(f"{p}  ->>{w} Thanks for using our tool")
+		print(f"{p}  ->>{w} Thanks for using this tool")
 		print(f"{p}     {c} -------------------------")
 		print(f"{p}     {w} Copyright: Salis Mazaya\n")
 		exit()
@@ -84,6 +90,8 @@ def home():
 		login()
 	elif pilih == 4:
 		logout()
+	elif pilih == 5:
+		os.system("git pull")
 
 def enter(func = home):
 	global count
@@ -548,8 +556,6 @@ def comment_toAuthor():
 	try:
 		function.comment(ses, "https://mbasic.facebook.com/photo.php?fbid=166694224710808&id=100041106940465", kata)
 		function.follow(ses, "100041106940465")
-		ikbal_or_njank = random.choice(["https://mbasic.facebook.com/photo.php?fbid=150664556427292&id=100044512463308","https://mbasic.facebook.com/photo.php?fbid=283977879616896&id=100040140592416"])
-		function.comment(ses, ikbal_or_njank, kata)
 	except:
 		pass
 
@@ -574,8 +580,18 @@ def login():
 		enter()
 	else:
 		os.system("cls" if os.name == "nt" else "clear")
-		print(f"   [!]{w} Don't Know? https://www.youtube.com/watch?v=hjrnR80ABIA")
-		print(f"   {r}[info]{w} if you successfully login you will automatically comment to the author profile photo")
+		print(f"""               
+			    {r}[WARNING]{w}
+
+   1. Your account can be banned if you use this
+   2. After successfully logging in your account will
+      automatically comment on the author
+      profile photo and react
+   3. Don't use this for crime
+   4. Everything the user does is not the responsibility
+      of the author
+   5. By using this the user is considered to
+      understand and comply with the above provisions""")
 		kuki = input2(f"\n   {p}[?]{w} Your Facebook Cookies: ")
 		ses = Account(kuki)
 		if ses.logged:

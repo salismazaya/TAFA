@@ -41,12 +41,14 @@ def mygroups():
 
 @app.route("/reaction/<in_>")
 def reaction(in_):
+	id_ = request.args.get("id")
+	# print(id_)
 	if in_ == "hm":
 		return render_template("react_hm.html")
 	elif in_ == "ft":
-		return render_template("react_ft.html")
+		return render_template("react_ft.html", id_ = id_)
 	elif in_ == "gr":
-		return render_template("react_gr.html")
+		return render_template("react_gr.html", id_ = id_)
 	elif in_ == "fp":
 		return render_template("react_fp.html")
 	else:
@@ -54,12 +56,13 @@ def reaction(in_):
 
 @app.route("/comment/<in_>")
 def comment(in_):
+	id_ = request.args.get("id")
 	if in_ == "hm":
 		return render_template("comment_hm.html")
 	elif in_ == "ft":
-		return render_template("comment_ft.html")
+		return render_template("comment_ft.html", id_ = id_)
 	elif in_ == "gr":
-		return render_template("comment_gr.html")
+		return render_template("comment_gr.html", id_ = id_)
 	elif in_ == "fp":
 		return render_template("comment_fp.html")
 	else:
@@ -150,7 +153,7 @@ def dump():
 	else:
 		data_ = []
 
-	data_ = data_ + data.items
+	data_ = data.items + data_
 
 	rv = {"status":True, "title":data.bs4().find("title").text, "items":data_[:int(limit)]}
 	return json.dumps(rv)
@@ -161,7 +164,7 @@ def give_react():
 	type_ = request.form["type"]
 
 	data = function.react(ses, url, type = type_)
-
+	# print()
 	return json.dumps({"status":data.status})
 
 @app.route("/function/comment", methods = ["POST"])
@@ -172,3 +175,8 @@ def give_comment():
 	data = function.comment(ses, url, comment_value)
 
 	return json.dumps({"status":data.status})
+
+@app.route("/function/search_f")
+def search_f():
+	name = request.args["name"]
+	return json.dumps(murtanto.find_id_friend(ses, name))

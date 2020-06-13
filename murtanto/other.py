@@ -25,8 +25,13 @@ def find_id_friend(ses, name):
   url = parsing.parsing_href(html, "__xts__", one = True)
   try:
     html = ses.session.get(url).text
-    return (parsing.getMyName(html), re.search(r"owner_id=(\d+)", html).group(1))
-  except:
+    if not "removefriend.php?friend_id=" in html:
+      return
+    name = parsing.getTitle(html)
+    id_ = re.search(r"owner_id=(\d+)", html).group(1)
+    profile_picture = parsing.to_bs4(html).find("img", {"alt": lambda x: x and "profile picture" in x})["src"]
+    return (name, id_, profile_picture)
+  except IOError:
     return
  
 def find_id_group(ses, name):

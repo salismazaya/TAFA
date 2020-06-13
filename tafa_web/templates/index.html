@@ -2,7 +2,7 @@
 
 {% set profile_picture = ses.profile_picture %}
 {% if not ses.profile_picture %}
-  {% set profile_picture = "https://scontent.fsub8-1.fna.fbcdn.net/v/t1.0-0/cp0/e15/q65/p320x320/75543771_146472003399697_7171139210018029568_o.jpg?_nc_cat=105&_nc_sid=7aed08&efg=eyJpIjoiYiJ9&_nc_ohc=l5AeHCoFtBkAX9wLofu&_nc_ht=scontent.fsub8-1.fna&_nc_tp=3&oh=dd9494a22772f15b00f73f986f534773&oe=5EFEE37A" %}
+  {% set profile_picture = "/static/img/facebook-pp.jpeg" %}
 {% endif %}
 
 <!doctype html>
@@ -43,8 +43,5 @@
       </div>
     </div>
     {{core.js()}}
-    <script type="text/javascript">
-      alert_("Using this tool can make your account blocked", null)
-    </script>
   </body>
 </html>

@@ -39,6 +39,12 @@ def getMyName(html):
 	data = to_bs4(html).find("title").text
 	return data
 
+def getTitle(html):
+	data = to_bs4(html).find("title").text
+	return data
+
+
+
 def getMyId(html):
     data = to_bs4(html).find("a", href = lambda x:"/allactivity" in x)["href"]
     data = re.search(r"/\d+/?", data).group().replace("/", "")

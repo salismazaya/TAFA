@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block input_fields %}
-   {{core.input("fa fa-user", "Id Group", "id_target")}}
+   {{core.input("fa fa-user", "Id Group", "id_target", value = "" if not id_ else id_)}}
 	{{core.input("fa fa-thumbs-up", "Limit", "limit", type = "number")}}
    <div class="form-group">
       <select class="form-control" id="type_react">
@@ -77,6 +77,8 @@
 
             let total_success = 0;
             let total_failed = 0;
+            success.html(0);
+            failed.html(0);
             for (let i = 0; i < data.length; i++){
                url = data[i];
                await sleep(300);

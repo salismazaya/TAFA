@@ -72,6 +72,8 @@
 
             let total_success = 0;
             let total_failed = 0;
+            success.html(0);
+            failed.html(0);
             for (let i = 0; i < data.length; i++){
                {% if index_id == "" %}
                   id = data[i];

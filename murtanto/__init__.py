@@ -11,6 +11,10 @@ from .friend import *
 from .react import *
 from .other import *
 
+like_post_group = like_post_grup
+react_post_group = react_post_grup
+comment_post_group = comment_post_grup
+
 class Account:
     __number = 0
     __logged = False
