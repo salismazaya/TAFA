@@ -19,7 +19,7 @@
 				{% for name, id_, img in items %}
 					<div class="col-lg-6 mb-1" id="{{id_|replace('.', '')}}">
 						<div class="row text-monospace text-white">
-							<img src="{{img}}" class="img-fluid img-thumbnai" width="180" height="180">
+							<img src="{{img}}" class="img-fluid img-thumbnail" style="width: 115px; height: 115px">
 							<div class="my-auto ml-2">
 								<span>{{name[:20]}}</span><br>
 								<span>{{id_}}</span><br>
@@ -105,7 +105,7 @@
 		 				friend.html(`
 		 					<div class="col-lg-6 mb-1">
 								<div class="row text-monospace text-white">
-									<img src="${data[2]}" class="img-fluid img-thumbnail" style="width: 180px">
+									<img src="${data[2]}" class="img-fluid img-thumbnail" style="width: 115px; height: 115px">
 									<div class="my-auto ml-2">
 										<span>${data[0]}</span><br>
 										<span>${data[1]}</span><br>
