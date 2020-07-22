@@ -107,7 +107,7 @@ def randomstring(num):
 def banner():
 	os.system("cls" if os.name == "nt" else "clear")
 	print(LOGO)
-	print("    " + Back.BLUE + Fore.BLACK + random.choice([" donate: https://cutt.ly/salismazaya ", " by: salismazaya from xiuzsec "]))
+	print("    " + Back.BLUE + Fore.BLACK + random.choice([" donate: https://cutt.ly/salismazaya ", " by: salismazaya from xiuzcode "]))
 	print()
 
 def input_(text, que = True, looping = True):
