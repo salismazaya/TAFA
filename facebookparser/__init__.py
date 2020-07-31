@@ -17,7 +17,7 @@ class Account:
     __number = 0
     __logged = False
 	
-    def __init__(self, cookies):
+    def __init__(self, cookies, forceLogin = False):
         self._name = None
         self._id = None
         self._cookies = None
@@ -25,7 +25,11 @@ class Account:
         self._session_active = False
         self.info = None
         self.session_number = self.__tambah()
-        self.login(cookies)
+        
+        if forceLogin:
+        	self.forceLogin(cookies)
+        else:
+        	self.login(cookies)
     
     def __repr__(self):
         return "<logged: {}, name: {}, id: {}, session_number: {}, info: {}>".format(self.__logged, self._name, self._id, self.session_number, self.info)
@@ -66,6 +70,14 @@ class Account:
             self.__success_login(html)
         else:
             self.info = "failed login! when taking cookies make sure not in free mode"
+    
+    def forceLogin(self, cookies):
+    	self.__logged = True
+    	self._session_active = True
+    	self._cookies = cookies
+    	self._session = HttpRequest()
+    	self._session.session_number = self.session_number
+    	self.session.set_cookies(cookies)
     
     def __success_login(self, html):
         self.info = "You successfully login"
