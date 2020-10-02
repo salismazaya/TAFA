@@ -4,7 +4,7 @@
 import os, random, time, sys, shutil
 from glob import glob
 from getpass import getpass
-
+from string import ascii_letters, digits
 try:
 	import facebookparser as fb
 	from facebookparser import action
@@ -100,8 +100,7 @@ def updateFunc(func):
 	return inner
 
 def randomstring(num):
-	char = list("qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM")
-	rv = "".join([random.choice(char) for _ in range(num)])
+	rv = "".join([random.choice(ascii_letters + digits) for _ in range(num)])
 	return rv
 
 def banner():
@@ -162,7 +161,7 @@ def show_select_menu(menu, back = True):
 	if back:
 		print(f"   {C}0).{W} Back")
 
-	return select(0 if back else 1, len(menu))
+	return select(int(not(back)), len(menu))
 
 # use lambda function for argument dump_func
 def dump(dump_func, limit, show_target = True):
